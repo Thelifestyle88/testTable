@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 import MainPage from '../Pages/MainPage/MainPage';
 import TrainPage from '../Pages/TrainPage/TrainPage';
+import AppHeader from '../AppHeader/AppHeader';
 
 import { useAppDispatch } from '../..';
 import { getAllTrains } from '../../services/actions/getAllTrains';
@@ -28,6 +29,7 @@ function App() {
 
   return (
     <>
+      <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<MainPage />} />
         <Route path="/train/:id" element={<TrainPage />} />
