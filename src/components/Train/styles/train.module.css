@@ -1,0 +1,12 @@
+.sell {
+    width: 100px;
+    padding: 10px;
+    border-bottom: 1px solid gray;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+    margin: 0;
+    padding: 0;
+}

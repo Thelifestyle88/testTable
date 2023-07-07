@@ -1,0 +1,36 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.caption {
+    text-align: left;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.table {
+    width: 100%;
+    padding: 10px;
+    border-collapse: collapse;
+}
+
+.thead {
+    text-align: left;
+}
+
+.button {
+    margin: 20px;
+    width: 30%;
+    height: 30px;
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    align-self: center;
+}
+
+.th {
+    padding: 10px;
+}

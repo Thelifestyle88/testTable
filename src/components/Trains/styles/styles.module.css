@@ -1,0 +1,19 @@
+.table {
+    width: 100%;
+    padding: 10px;
+    border-collapse: collapse;
+}
+
+.caption {
+    text-align: left;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.th {
+    width: 100px;
+    padding: 10px;
+    text-align: left;
+    background-color: lightgray;
+}

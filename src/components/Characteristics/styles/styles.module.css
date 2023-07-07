@@ -1,0 +1,18 @@
+.input {
+    width: 90%;
+    background: transparent;
+    color: white;
+    border-bottom: 1px solid gray;
+    margin: 10px;
+}
+
+.td {
+    margin: 5px;
+}
+
+.error {
+    color: white;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}
