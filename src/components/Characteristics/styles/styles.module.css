@@ -16,3 +16,13 @@
     margin: 0;
     padding: 0;
 }
+
+.redInput {
+    width: 90%;
+    background: transparent;
+    color: white;
+    border: 1px solid red;
+    box-shadow: -1px 1px 10px 10px rgba(189, 14, 29, 0.2);
+    box-shadow: ;
+    margin: 10px;
+}

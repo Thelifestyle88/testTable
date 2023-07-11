@@ -4,6 +4,7 @@ import { useAppSelector } from '../../..';
 import Characteristics from '../../Characteristics/Characteristics';
 
 import styles from './styles/styles.module.css';
+import { useState } from 'react';
 
 function TrainPage() {
   const train = useAppSelector((store) => store.trainDetailsReducer.train);
@@ -11,6 +12,19 @@ function TrainPage() {
 
   const { register, handleSubmit } = useForm();
 
+  const [valueEn, setValueEn] = useState('1');
+  const [valueFor, setValueFor] = useState('1');
+  const [valueSp, setValueSp] = useState('1');
+
+  const handleChangeEn = (valueEn: string) => {
+    setValueEn(valueEn);
+  };
+  const handleChangeFor = (valueFor: string) => {
+    setValueFor(valueFor);
+  };
+  const handleChangeSP = (valueSp: string) => {
+    setValueSp(valueSp);
+  };
   const onSubmit = () => {
     const allspeed = document.getElementsByName('speed');
     setTimeout(() => {
@@ -42,11 +56,26 @@ function TrainPage() {
             </thead>
             <tbody>
               {characteristics.map((item, index) => {
-                return <Characteristics key={index} characteristics={item} register={register} />;
+                return (
+                  <Characteristics
+                    key={index}
+                    characteristics={item}
+                    register={register}
+                    onChangeEn={handleChangeEn}
+                    onChangeFor={handleChangeFor}
+                    onChangeSP={handleChangeSP}
+                  />
+                );
               })}
             </tbody>
           </table>
-          <input className={styles.button} type="submit" />
+          <input
+            className={styles.button}
+            disabled={
+              Number(valueEn) >= 0 && Number(valueFor) >= 0 && Number(valueSp) >= 0 ? false : true
+            }
+            type="submit"
+          />
         </form>
       )}
     </>

@@ -9,28 +9,40 @@ import styles from './styles/styles.module.css';
 type characteristicsProps = {
   characteristics: TrainCharacteristics;
   register: UseFormRegister<FieldValues>;
+  onChangeEn(valueEn: string): void;
+  onChangeFor(valueFor: string): void;
+  onChangeSP(valueSp: string): void;
 };
 
-function Characteristics({ characteristics, register }: characteristicsProps) {
+function Characteristics({
+  characteristics,
+  register,
+  onChangeEn,
+  onChangeFor,
+  onChangeSP,
+}: characteristicsProps) {
   const [engine, setEngine] = useState(characteristics.engineAmperage);
   const [force, setForce] = useState(characteristics.force);
   const [speed, setSpeed] = useState(characteristics.speed);
 
   const onChangeEngine = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEngine(e.target.value);
+    onChangeEn(e.target.value);
   };
   const onChangeForce = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForce(e.target.value);
+    onChangeFor(e.target.value);
   };
   const onChangeSpeed = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSpeed(e.target.value);
+    onChangeSP(e.target.value);
   };
 
   return (
     <tr>
       <td className={styles.td}>
         <input
-          className={styles.input}
+          className={`${Number(engine) >= 0 ? styles.input : styles.redInput}`}
           title="engine"
           type="number"
           value={engine}
@@ -45,7 +57,7 @@ function Characteristics({ characteristics, register }: characteristicsProps) {
       </td>
       <td>
         <input
-          className={styles.input}
+          className={`${Number(force) >= 0 ? styles.input : styles.redInput}`}
           title="force"
           type="number"
           {...(register('force'),
@@ -61,7 +73,7 @@ function Characteristics({ characteristics, register }: characteristicsProps) {
       </td>
       <td>
         <input
-          className={styles.input}
+          className={`${Number(speed) >= 0 ? styles.input : styles.redInput}`}
           {...(register('speed'),
           {
             name: 'speed',
