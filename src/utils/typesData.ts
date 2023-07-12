@@ -6,7 +6,7 @@ export type TTrain = {
 }
 
 export type TrainCharacteristics = {
-    speed: string,
-    force: string,
-    engineAmperage: string
+    speed: number,
+    force: number,
+    engineAmperage: number
 }

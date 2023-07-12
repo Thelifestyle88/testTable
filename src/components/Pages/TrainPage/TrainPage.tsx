@@ -4,47 +4,32 @@ import { useAppSelector } from '../../..';
 import Characteristics from '../../Characteristics/Characteristics';
 
 import styles from './styles/styles.module.css';
-import { useState } from 'react';
+
+export type FormValues = {
+  engine: number[];
+  force: number[];
+  speed: number[];
+};
 
 function TrainPage() {
   const train = useAppSelector((store) => store.trainDetailsReducer.train);
   const characteristics = train?.characteristics;
-
-  const { register, handleSubmit } = useForm();
-
-  const [valueEn, setValueEn] = useState('1');
-  const [valueFor, setValueFor] = useState('1');
-  const [valueSp, setValueSp] = useState('1');
-
-  const handleChangeEn = (valueEn: string) => {
-    setValueEn(valueEn);
+  const validation = useForm<FormValues>({ mode: 'onBlur' });
+  const onSubmit = (data: FormValues) => {
+    const speed = data.speed.map((item) => {
+      return Number(item);
+    });
+    const final = speed.sort((a, b) => {
+      return a - b;
+    });
+    console.log(final);
   };
-  const handleChangeFor = (valueFor: string) => {
-    setValueFor(valueFor);
-  };
-  const handleChangeSP = (valueSp: string) => {
-    setValueSp(valueSp);
-  };
-  const onSubmit = () => {
-    const allspeed = document.getElementsByName('speed');
-    setTimeout(() => {
-      const arr = Array.from(allspeed);
-      const result = arr
-        .map((item) => {
-          //@ts-ignore
-          return item.value;
-        })
-        .sort((a, b) => {
-          return a - b;
-        });
-      console.log(result);
-    }, 0);
-  };
+  const errors = validation.formState.errors;
 
   return (
     <>
       {characteristics && (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <form onSubmit={validation.handleSubmit(onSubmit)} className={styles.form}>
           <table className={styles.table}>
             <caption className={styles.caption}>{train.name}</caption>
             <thead className={styles.thead}>
@@ -60,10 +45,8 @@ function TrainPage() {
                   <Characteristics
                     key={index}
                     characteristics={item}
-                    register={register}
-                    onChangeEn={handleChangeEn}
-                    onChangeFor={handleChangeFor}
-                    onChangeSP={handleChangeSP}
+                    name={index}
+                    validation={validation}
                   />
                 );
               })}
@@ -71,9 +54,7 @@ function TrainPage() {
           </table>
           <input
             className={styles.button}
-            disabled={
-              Number(valueEn) >= 0 && Number(valueFor) >= 0 && Number(valueSp) >= 0 ? false : true
-            }
+            disabled={Object.keys(errors).length === 0 ? false : true}
             type="submit"
           />
         </form>

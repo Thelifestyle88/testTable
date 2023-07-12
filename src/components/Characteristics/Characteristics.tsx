@@ -1,91 +1,67 @@
-import { useState } from 'react';
-
-import { UseFormRegister, FieldValues } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 
 import { TrainCharacteristics } from '../../utils/typesData';
 
 import styles from './styles/styles.module.css';
+import { FormValues } from '../Pages/TrainPage/TrainPage';
 
 type characteristicsProps = {
   characteristics: TrainCharacteristics;
-  register: UseFormRegister<FieldValues>;
-  onChangeEn(valueEn: string): void;
-  onChangeFor(valueFor: string): void;
-  onChangeSP(valueSp: string): void;
+  validation: UseFormReturn<FormValues>;
+  name: number;
 };
 
-function Characteristics({
-  characteristics,
-  register,
-  onChangeEn,
-  onChangeFor,
-  onChangeSP,
-}: characteristicsProps) {
-  const [engine, setEngine] = useState(characteristics.engineAmperage);
-  const [force, setForce] = useState(characteristics.force);
-  const [speed, setSpeed] = useState(characteristics.speed);
-
-  const onChangeEngine = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEngine(e.target.value);
-    onChangeEn(e.target.value);
-  };
-  const onChangeForce = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForce(e.target.value);
-    onChangeFor(e.target.value);
-  };
-  const onChangeSpeed = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSpeed(e.target.value);
-    onChangeSP(e.target.value);
-  };
+function Characteristics({ characteristics, validation, name }: characteristicsProps) {
+  const engine = characteristics.engineAmperage;
+  const force = characteristics.force;
+  const speed = characteristics.speed;
 
   return (
     <tr>
       <td className={styles.td}>
         <input
-          className={`${Number(engine) >= 0 ? styles.input : styles.redInput}`}
-          title="engine"
+          defaultValue={engine}
+          className={`${
+            validation.getFieldState(`engine.${name}`).invalid ? styles.redInput : styles.input
+          }`}
           type="number"
-          value={engine}
-          {...(register('engine'),
-          {
-            name: 'engine',
+          {...validation.register(`engine.${name}`, {
             required: true,
-            onChange: onChangeEngine,
-            min: 0,
+            validate: {
+              positive: (v) => v >= 0,
+            },
           })}
         />
       </td>
       <td>
         <input
-          className={`${Number(force) >= 0 ? styles.input : styles.redInput}`}
-          title="force"
+          defaultValue={force}
+          className={`${
+            validation.getFieldState(`force.${name}`).invalid ? styles.redInput : styles.input
+          }`}
           type="number"
-          {...(register('force'),
-          {
-            name: 'force',
+          {...validation.register(`force.${name}`, {
+            validate: {
+              positive: (v) => v >= 0,
+            },
             required: true,
-            onChange: onChangeForce,
-            step: 0.01,
-            min: 0,
           })}
-          value={force}
+          step={0.0001}
         />
       </td>
       <td>
         <input
-          className={`${Number(speed) >= 0 ? styles.input : styles.redInput}`}
-          {...(register('speed'),
-          {
-            name: 'speed',
-            required: true,
-            onChange: onChangeSpeed,
-            min: 0,
-          })}
-          title="speed"
+          defaultValue={speed}
+          className={`${
+            validation.getFieldState(`speed.${name}`).invalid ? styles.redInput : styles.input
+          }`}
           type="number"
-          value={speed}
-          onChange={(e) => onChangeSpeed(e)}
-          min={0}
+          {...validation.register(`speed.${name}`, {
+            required: true,
+            validate: {
+              positive: (v) => v >= 0,
+            },
+          })}
         />
       </td>
     </tr>
